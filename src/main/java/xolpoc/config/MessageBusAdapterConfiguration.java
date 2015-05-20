@@ -15,17 +15,22 @@
  */
 package xolpoc.config;
 
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.integration.config.EnableIntegration;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
-import org.springframework.xd.module.core.Plugin;
+import org.springframework.xd.dirt.integration.bus.MessageBusAwareRouterBeanPostProcessor;
 
-import xolpoc.plugins.StreamPlugin;
+import xolpoc.adapter.MessageBusAdapter;
+import xolpoc.bootstrap.ModuleProperties;
 
 /**
  * @author Dave Syer
@@ -34,17 +39,32 @@ import xolpoc.plugins.StreamPlugin;
 @Configuration
 @EnableIntegration
 @Import(PropertyPlaceholderAutoConfiguration.class)
-//@ImportResource({"classpath*:/META-INF/spring-xd/bus/*.xml"})
+// @ImportResource({"classpath*:/META-INF/spring-xd/bus/*.xml"})
 @ImportResource({ "classpath*:/META-INF/spring-xd/bus/redis-bus.xml",
 		"classpath*:/META-INF/spring-xd/bus/codec.xml" })
-public class PluginConfiguration {
+public class MessageBusAdapterConfiguration {
 
-	@Autowired
-	private MessageBus messageBus;
+	@Autowired(required=false)
+	@Qualifier("output")
+	private MessageChannel output;
+	
+	@Autowired(required=false)
+	@Qualifier("input")
+	private MessageChannel input;
+	
+	@Bean
+	public MessageBusAdapter messageBusAdapter(ModuleProperties module,
+			MessageBus messageBus) {
+		MessageBusAdapter adapter = new MessageBusAdapter(module, messageBus);
+		adapter.setOutputChannel(output);
+		adapter.setInputChannel(input);
+		return adapter;
+	}
 
 	@Bean
-	public Plugin streamPlugin() {
-		return new StreamPlugin(messageBus);
+	public MessageBusAwareRouterBeanPostProcessor messageBusAwareRouterBeanPostProcessor(
+			MessageBus messageBus) {
+		return new MessageBusAwareRouterBeanPostProcessor(messageBus, new Properties());
 	}
 
 }
