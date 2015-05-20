@@ -1,5 +1,3 @@
-xdHome: /opt/xd
-
 spring:
   profiles:
     active: default

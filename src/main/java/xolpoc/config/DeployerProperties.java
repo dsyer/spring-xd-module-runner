@@ -25,15 +25,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("xd")
 public class DeployerProperties {
 
-	@Value("${XD_MODULE:${module:ticktock.source.time.0}}")
+	@Value("${XD_MODULE:${module:ticktock.source.ticker.0}}")
 	private String module;
 
 	private String input = null;
 
 	private String output = null;
-
-	@Value("file:${XD_HOME:${xdHome:/opt/xd}}/modules")
-	private String moduleHome = "file:/opt/xd/modules";
 
 	public String getModule() {
 		return module;
@@ -59,11 +56,4 @@ public class DeployerProperties {
 		this.output = output;
 	}
 
-	public String getModuleHome() {
-		return moduleHome;
-	}
-
-	public void setModuleHome(String moduleHome) {
-		this.moduleHome = moduleHome;
-	}
 }

@@ -29,10 +29,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.xd.dirt.module.ModuleDeployer;
 import org.springframework.xd.dirt.module.ModuleRegistry;
-import org.springframework.xd.dirt.module.ResourceModuleRegistry;
 import org.springframework.xd.dirt.plugins.job.JobPluginMetadataResolver;
 import org.springframework.xd.dirt.plugins.stream.ModuleTypeConversionPluginMetadataResolver;
+import org.springframework.xd.dirt.test.SingletonModuleRegistry;
 import org.springframework.xd.module.ModuleDeploymentProperties;
+import org.springframework.xd.module.ModuleType;
 import org.springframework.xd.module.core.ModuleFactory;
 import org.springframework.xd.module.options.DefaultModuleOptionsMetadataResolver;
 import org.springframework.xd.module.options.DelegatingModuleOptionsMetadataResolver;
@@ -65,8 +66,8 @@ public class DeployerConfiguration {
 	}
 
 	@Bean
-	public ResourceModuleRegistry moduleRegistry() {
-		return new ResourceModuleRegistry(deployer.getModuleHome());
+	public ModuleRegistry moduleRegistry() {
+		return new SingletonModuleRegistry(ModuleType.source, "ticker");
 	}
 
 	@Bean
