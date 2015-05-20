@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xolpoc.adapter;
+package org.springframework.xd.module.runner.adapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,8 +46,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
 import org.springframework.xd.dirt.integration.bus.XdHeaders;
 import org.springframework.xd.module.ModuleType;
-
-import xolpoc.bootstrap.ModuleProperties;
+import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 
 /**
  * @author Mark Fisher

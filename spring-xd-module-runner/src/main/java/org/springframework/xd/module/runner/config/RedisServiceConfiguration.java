@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package xolpoc.config;
+package org.springframework.xd.module.runner.config;
 
-import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
-import org.springframework.boot.autoconfigure.redis.RedisAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.config.java.AbstractCloudConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.xd.dirt.integration.redis.RedisMessageBus;
 
 /**
  * Bind to services, either locally or in a Lattice environment.
  *
  * @author Mark Fisher
+ * @author Dave Syer
  */
 @Configuration
-@Import(PropertyPlaceholderAutoConfiguration.class)
+@ConditionalOnClass(RedisMessageBus.class)
 @ImportResource("classpath*:/META-INF/spring-xd/analytics/redis-analytics.xml")
-public class ServiceConfiguration {
+public class RedisServiceConfiguration {
 
 	@Configuration
 	@Profile("cloud")
@@ -44,12 +44,6 @@ public class ServiceConfiguration {
 		RedisConnectionFactory redisConnectionFactory() {
 			return connectionFactory().redisConnectionFactory();
 		}
-	}
-
-	@Configuration
-	@Profile("!cloud") // TODO: enable this for cloud profile as well?
-	@Import(RedisAutoConfiguration.class)
-	protected static class NoCloudConfig {
 	}
 
 }

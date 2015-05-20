@@ -1,3 +1,4 @@
+---
 xd:
   config:
     home: ${XD_HOME:${xdHome:./xd}}

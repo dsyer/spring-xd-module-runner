@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xolpoc.bootstrap;
+package org.springframework.xd.module.runner.bootstrap;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,12 +23,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.bootstrap.config.PropertySourceLocator;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
-import org.springframework.core.env.PropertySource;
 import org.springframework.xd.dirt.plugins.job.JobPluginMetadataResolver;
 import org.springframework.xd.dirt.plugins.stream.ModuleTypeConversionPluginMetadataResolver;
 import org.springframework.xd.module.options.DefaultModuleOptionsMetadataResolver;
@@ -39,18 +41,23 @@ import org.springframework.xd.module.options.ModuleOptionsMetadata;
 import org.springframework.xd.module.options.ModuleOptionsMetadataResolver;
 
 /**
+ * Initialize the application context with default values for the module options.
+ *  
  * @author Dave Syer
  *
  */
 @Configuration
 @EnableConfigurationProperties(ModuleProperties.class)
-public class ModuleOptionsPropertySourceLocator implements PropertySourceLocator {
+@Order(Ordered.HIGHEST_PRECEDENCE + 10)
+public class ModuleOptionsPropertySourceInitializer implements
+		ApplicationContextInitializer<ConfigurableApplicationContext> {
 
 	@Autowired
 	private ModuleProperties module = new ModuleProperties();
 
 	@Override
-	public PropertySource<?> locate(Environment environment) {
+	public void initialize(ConfigurableApplicationContext applicationContext) {
+		ConfigurableEnvironment environment = applicationContext.getEnvironment();
 		EnvironmentAwareModuleOptionsMetadataResolver resolver = moduleOptionsMetadataResolver();
 		resolver.setEnvironment(environment);
 		ModuleOptionsMetadata resolved = resolver.resolve(module.getModuleDefinition());
@@ -58,13 +65,17 @@ public class ModuleOptionsPropertySourceLocator implements PropertySourceLocator
 		for (ModuleOption option : resolved) {
 			map.put(option.getName(), option.getDefaultValue());
 		}
-		return new MapPropertySource("module", map );
+		insert(environment, new MapPropertySource("moduleDefaults", map));
+	}
+
+	private void insert(ConfigurableEnvironment environment, MapPropertySource source) {
+		environment.getPropertySources().addLast(source);
 	}
 
 	@Bean
 	public EnvironmentAwareModuleOptionsMetadataResolver moduleOptionsMetadataResolver() {
 		List<ModuleOptionsMetadataResolver> delegates = new ArrayList<ModuleOptionsMetadataResolver>();
-		delegates.add(defaultResolver()); 
+		delegates.add(defaultResolver());
 		delegates.add(new ModuleTypeConversionPluginMetadataResolver());
 		delegates.add(new JobPluginMetadataResolver());
 		DelegatingModuleOptionsMetadataResolver delegatingResolver = new DelegatingModuleOptionsMetadataResolver();
@@ -73,7 +84,7 @@ public class ModuleOptionsPropertySourceLocator implements PropertySourceLocator
 		resolver.setDelegate(delegatingResolver);
 		return resolver;
 	}
-	
+
 	@Bean
 	// TODO: allow override of this
 	public DefaultModuleOptionsMetadataResolver defaultResolver() {

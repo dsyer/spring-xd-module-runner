@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package xolpoc.config;
+package org.springframework.xd.module.runner.config;
 
 import java.util.Properties;
 
@@ -28,9 +28,8 @@ import org.springframework.integration.config.EnableIntegration;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
 import org.springframework.xd.dirt.integration.bus.MessageBusAwareRouterBeanPostProcessor;
-
-import xolpoc.adapter.MessageBusAdapter;
-import xolpoc.bootstrap.ModuleProperties;
+import org.springframework.xd.module.runner.adapter.MessageBusAdapter;
+import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 
 /**
  * @author Dave Syer

@@ -4,8 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
-
-import xolpoc.config.EnableXdModule;
+import org.springframework.xd.module.runner.EnableXdModule;
 
 @SpringBootApplication
 @EnableXdModule

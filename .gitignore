@@ -4,8 +4,8 @@ asciidoctor.css
 *~
 .#*
 *#
-target
-bin
+target/
+bin/
 _site/
 xd
 .classpath
@@ -17,3 +17,4 @@ xd
 *.iml
 .idea
 .factorypath
+spring-xd-module-runner-sample/xd

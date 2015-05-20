@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xolpoc.bootstrap;
+package org.springframework.xd.module.runner.bootstrap;
 
 import java.util.Properties;
 
@@ -36,7 +36,7 @@ public class ModuleProperties {
 
 	private String group = "group";
 
-	private int index = 0;
+	private int index = 1;
 
 	private String outputChannelName;
 
