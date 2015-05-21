@@ -92,6 +92,18 @@ The "group" and "index" are used to create physical endpoints in the external br
 
 ## Taps
 
-All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis).
+All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis). To tap an existing output channel you just need to know its group, name and index, e.g.
 
+```
+xd:
+  module:
+    group: tocktap
+    name: logger
+    index: 0
+    tap:
+      group: testtock
+      name: ticker
+      index: 0
+```
 
+The `xd.module.tap` section tells the module runner which topic you want to subscribe to. It creates a new group (a tap can't be in the same group as the one it is tapping) and starts a new index count, in case anyone wants to listen downstream.
