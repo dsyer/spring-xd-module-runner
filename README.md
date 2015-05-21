@@ -54,6 +54,18 @@ xd:
 
 To be deployable as an XD module in a "traditional" way you need `/config/*.properties` to point to any available Java config classes (via `base_packages` or `options_class`), or else you can put traditional XML configuration in `/config/*.xml`. You don't need those things to run as a consumer or producer to an existing XD system. There's an XML version of the same sample (a "timer" source).
 
+## Samples
+
+There are 3 samples, all running on the redis transport (so you need redis running locally to test them):
+
+* `spring-xd-module-runner-sample-source` is a Java config version of the classic "timer" module from Spring XD. It has a "fixedDelay" option (in milliseconds) for the period between emitting messages.
+
+* `spring-xd-module-runner-sample-sink` is a Java config version of the classic "log" module from Spring XD. It has no options (but some could easily be added), and just logs incoming messages at INFO level.
+
+* `spring-xd-module-runner-sample-source-xml` is a copy of the classic "timer" module from Spring XD.
+
+If you run the source and the sink and point them at the same redis instance (e.g. the one on localhost, or the one they are both bound to as a service on CLoud Foundry) then they will form a "stream" and start talking to each other.
+
 ## Module or App
 
 Code using this library can be deployed as a standlaone app or as an XD module. In standalone mode you app will run happily as a service or in any PaaS (Cloud Foundry, Lattice, Heroku, Azure, etc.). Depending on whether your main aim is to develop an XD module and you just want to test it locally using the standalone mode, or if the ultimate goal is a standalone app, there are some things that you might do differently.
