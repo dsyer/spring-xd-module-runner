@@ -47,6 +47,8 @@ public class ModuleProperties {
 	private Properties consumerProperties = new Properties();
 
 	private Properties producerProperties = new Properties();
+	
+	private Tap tap;
 
 	public SimpleModuleDefinition getModuleDefinition() {
 		return ModuleDefinitions.simple(name, type, "classpath:");
@@ -77,6 +79,9 @@ public class ModuleProperties {
 	}
 
 	public String getInputChannelName() {
+		if (isTap()) {
+			return String.format("%s.%s.%s", BusUtils.constructTapPrefix(tap.getGroup()), tap.getName(), tap.getIndex());
+		}
 		return (inputChannelName != null) ? inputChannelName : BusUtils
 				.constructPipeName(group, index>0 ? index - 1 : index);
 	}
@@ -122,6 +127,56 @@ public class ModuleProperties {
 
 	public void setProducerProperties(Properties producerProperties) {
 		this.producerProperties = producerProperties;
+	}
+	
+	public Tap getTap() {
+		return tap;
+	}
+
+	public void setTap(Tap tap) {
+		this.tap = tap;
+	}
+	
+	private boolean isTap() {
+		if (tap!=null) {
+			Assert.state(tap.getName()!=null, "Tap name not provided");
+			Assert.state(!tap.getGroup().equals(group), "Tap group cannot be the same as module group");
+		}
+		return tap!=null;
+	}
+
+	public static class Tap {
+
+		private String group = "group";
+		
+		private String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		private int index = 0;
+
+		public String getGroup() {
+			return group;
+		}
+
+		public void setGroup(String group) {
+			this.group = group;
+		}
+
+		public int getIndex() {
+			return index;
+		}
+
+		public void setIndex(int index) {
+			this.index = index;
+		}
+
 	}
 
 }

@@ -1,0 +1,16 @@
+---
+xd:
+  config:
+    home: ${XD_HOME:${xdHome:./xd}}
+
+---
+xd:
+  module:
+    group: tocktap
+    name: logger
+    index: 0
+    tap:
+      group: testtock
+      name: ticker
+      index: 0
+    

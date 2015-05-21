@@ -1,0 +1,43 @@
+server:
+  port: 8081
+
+---
+
+spring:
+  profiles:
+    active: default
+  redis:
+    port: 6379
+    host: localhost
+    pool.maxIdle: 8
+    pool.minIdle: 0
+    pool.maxActive: 8
+    pool.maxWait: -1
+
+xd:
+  messagebus:
+    local:
+      polling:                     1000
+      executor:
+        corePoolSize:              0
+        maxPoolSize:               200
+#       queueSize:                 # defaults to Integer.MAX_VALUE
+        keepAliveSeconds:          60
+    redis:
+      headers:
+        # comma-delimited list of additional (string-valued) header names to transport
+      default:
+        # default bus properties, if not specified at the module level
+        backOffInitialInterval:    1000
+        backOffMaxInterval:        10000
+        backOffMultiplier:         2.0
+        concurrency:               1
+        maxAttempts:               3
+---
+xd:
+  analytics:
+    redis:
+      backOffInitialInterval:    1000
+      backOffMaxInterval:        10000
+      backOffMultiplier:         2.0
+      maxAttempts:               5

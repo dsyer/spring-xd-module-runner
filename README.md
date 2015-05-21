@@ -56,15 +56,17 @@ To be deployable as an XD module in a "traditional" way you need `/config/*.prop
 
 ## Samples
 
-There are 3 samples, all running on the redis transport (so you need redis running locally to test them):
+There are several samples, all running on the redis transport (so you need redis running locally to test them):
 
 * `spring-xd-module-runner-sample-source` is a Java config version of the classic "timer" module from Spring XD. It has a "fixedDelay" option (in milliseconds) for the period between emitting messages.
 
 * `spring-xd-module-runner-sample-sink` is a Java config version of the classic "log" module from Spring XD. It has no options (but some could easily be added), and just logs incoming messages at INFO level.
 
+* `spring-xd-module-runner-sample-tap` is the same as the sink sample, except it is configured to tap the source sample output. When it is running it looks a lot like the sink, except that it only gets copies of the messages in the broker, and since it is a pub-sub subscriber, it only gets the messages sent since it started.
+
 * `spring-xd-module-runner-sample-source-xml` is a copy of the classic "timer" module from Spring XD.
 
-If you run the source and the sink and point them at the same redis instance (e.g. do nothing to get the one on localhost, or the one they are both bound to as a service on Cloud Foundry) then they will form a "stream" and start talking to each other.
+If you run the source and the sink and point them at the same redis instance (e.g. do nothing to get the one on localhost, or the one they are both bound to as a service on Cloud Foundry) then they will form a "stream" and start talking to each other. All the samples have friendly JMX and Actuator endpoints for inspecting what is going on in the system.
 
 ## Module or App
 
@@ -88,6 +90,8 @@ The "group" and "index" are used to create physical endpoints in the external br
 
 > Note: since the same naming conventions are used in XD, you can spy on or send messages to an existing XD stream by copying the stream name (to `xd.group`) and knowing the index of the XD module you want to interact with.
 
-All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis). TODO: configure tap metadata so that you can automatically listen to an existing tap.
+## Taps
+
+All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis).
 
 

@@ -14,6 +14,7 @@
 		<module>spring-xd-module-runner</module>
 		<module>spring-xd-module-runner-sample-source</module>
 		<module>spring-xd-module-runner-sample-sink</module>
+		<module>spring-xd-module-runner-sample-tap</module>
 		<module>spring-xd-module-runner-sample-source-xml</module>
 	</modules>
 	<repositories>
