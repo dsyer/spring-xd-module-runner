@@ -1,17 +1,37 @@
-Experimental project allowing user to develop and run an XD module locally. Just crate `MessageChannels` "input" and/or "output" and add `@EnableXdModule` and run your app as a Spring Boot app (single application context).  You just need to connect to the physical broker for the bus, which is automatic if the relevant bus implementation is available on the classpath. The sample uses Redis.
+# Spring XD Module as a Microservice
 
-See sample for details:
+This is an experimental project allowing user to develop and run an XD module locally. Just create `MessageChannels` "input" and/or "output" and add `@EnableXdModule` and run your app as a Spring Boot app (single application context).  You just need to connect to the physical broker for the bus, which is automatic if the relevant bus implementation is available on the classpath. The sample uses Redis.
+
+Here's a sample source module (output channel only):
 
 ```
 @SpringBootApplication
 @EnableXdModule
-@ImportResource("classpath:/config/ticker.xml")
-@PropertySource("classpath:/config/ticker.properties")
+@ComponentScan(basePackageClasses=ModuleDefinition.class)
 public class ModuleApplication {
 
-	public static void main(String[] args) throws InterruptedException {
-		new SpringApplicationBuilder().sources(ModuleApplication.class).run(args);
-	}
+  public static void main(String[] args) throws InterruptedException {
+    SpringApplication.run(ModuleApplication.class, args);
+  }
+
+}
+
+@Configuration
+public class ModuleDefinition {
+
+  @Value("${format}")
+  private String format;
+
+  @Bean
+  public MessageChannel output() {
+    return new DirectChannel();
+  }
+
+  @Bean
+  @InboundChannelAdapter(value = "output", autoStartup = "false", poller = @Poller(fixedDelay = "${fixedDelay}", maxMessagesPerPoll = "1"))
+  public MessageSource<String> timerMessageSource() {
+    return () -> new GenericMessage<>(new SimpleDateFormat(format).format(new Date()));
+  }
 
 }
 ```
@@ -32,7 +52,7 @@ xd:
     index: 0 # source
 ```
 
-To be deployable as an XD module in a "traditional" way you need `/config/*.properties` to point to any available Java config classes (via `base_packages` or `options_class`), or else you can put traditional XML configuration in `/config/*.xml`. You don't need those things to run as a consumer or producer to an existing XD system.
+To be deployable as an XD module in a "traditional" way you need `/config/*.properties` to point to any available Java config classes (via `base_packages` or `options_class`), or else you can put traditional XML configuration in `/config/*.xml`. You don't need those things to run as a consumer or producer to an existing XD system. There's an XML version of the same sample (a "timer" source).
 
 ## Module or App
 

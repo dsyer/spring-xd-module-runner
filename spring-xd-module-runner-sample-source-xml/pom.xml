@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.springframework.xd</groupId>
-	<artifactId>spring-xd-module-runner-sample</artifactId>
+	<artifactId>spring-xd-module-runner-sample-source-xml</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>spring-xd-module-runner-sample</name>
+	<name>spring-xd-module-runner-sample-source-xml</name>
 	<description>Demo project for Spring XD module</description>
 
 	<parent>
