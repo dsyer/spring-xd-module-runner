@@ -64,7 +64,7 @@ There are 3 samples, all running on the redis transport (so you need redis runni
 
 * `spring-xd-module-runner-sample-source-xml` is a copy of the classic "timer" module from Spring XD.
 
-If you run the source and the sink and point them at the same redis instance (e.g. the one on localhost, or the one they are both bound to as a service on CLoud Foundry) then they will form a "stream" and start talking to each other.
+If you run the source and the sink and point them at the same redis instance (e.g. do nothing to get the one on localhost, or the one they are both bound to as a service on Cloud Foundry) then they will form a "stream" and start talking to each other.
 
 ## Module or App
 
