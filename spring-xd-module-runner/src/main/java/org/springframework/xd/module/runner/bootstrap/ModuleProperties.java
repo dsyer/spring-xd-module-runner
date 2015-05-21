@@ -36,7 +36,7 @@ public class ModuleProperties {
 
 	private String group = "group";
 
-	private int index = 1;
+	private int index = 0;
 
 	private String outputChannelName;
 
@@ -78,7 +78,7 @@ public class ModuleProperties {
 
 	public String getInputChannelName() {
 		return (inputChannelName != null) ? inputChannelName : BusUtils
-				.constructPipeName(group, index - 1);
+				.constructPipeName(group, index>0 ? index - 1 : index);
 	}
 
 	public String getOutputChannelName() {
