@@ -84,7 +84,9 @@ You can run in standalone mode from your IDE for testing. To run in production y
 
 ## Making Standalone Modules Talk to Each Other
 
-The "group" and "index" are used to create physical endpoints in the external broker (e.g. `queue.<group>.<index>` in Redis), so a source (output only) has `index=0` (the default) and downstream modules have the same group but incremented index, with a sink module (input only) has the highest index. To listen to the output from an existing app, just use the same "group" and an index 1 larger than it has.
+The "group" and "index" are used to create physical endpoints in the external broker (e.g. `queue.<group>.<index>` in Redis), so a source (output only) has `index=0` (the default) and downstream modules have the same group but incremented index, with a sink module (input only) having the highest index. To listen to the output from an existing app, just use the same "group" name and an index 1 larger than the app before it in the chain. The index can be anything, as long as successive modules have consecutive values. 
+
+> Note: since the same naming conventions are used in XD, you can spy on or send messages to an existing XD stream by copying the stream name (to `xd.group`) and knowing the index of the XD module you want to interact with.
 
 All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis). TODO: configure tap metadata so that you can automatically listen to an existing tap.
 
