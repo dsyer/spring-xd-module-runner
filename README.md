@@ -29,7 +29,7 @@ xd:
   module:
     group: testtock
     name: ${spring.application.name:ticker}
-    index: ${spring.application.index:1}
+    index: 0 # source
 ```
 
 To be deployable as an XD module in a "traditional" way you need `/config/*.properties` to point to any available Java config classes (via `base_packages` or `options_class`), or else you can put traditional XML configuration in `/config/*.xml`. You don't need those things to run as a consumer or producer to an existing XD system.
@@ -45,3 +45,11 @@ Module option (placeholders) default values can be set in `/config/*.properties`
 ## Local Configuration
 
 The `application.yml` and `bootstrap.yml` files are ignored by XD when deploying the module natively, so you can put whatever you like in there to control the app in standlone mode.
+
+## Making Standalone Modules Talk to Each Other
+
+The "group" and "index" are used to create physical endpoints in the external broker (e.g. `queue.<group>.<index>` in Redis), so a source (output only) has `index=0` (the default) and downstream modules have the same group but incremented index, with a sink module (input only) has the highest index. To listen to the output from an existing app, just use the same "group" and an index 1 larger than it has.
+
+All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis). TODO: configure tap metadata so that you can automatically listen to an existing tap.
+
+
