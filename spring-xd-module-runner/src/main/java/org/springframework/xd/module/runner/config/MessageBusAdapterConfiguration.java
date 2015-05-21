@@ -39,14 +39,14 @@ import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 @ImportResource("classpath*:/META-INF/spring-xd/bus/codec.xml")
 public class MessageBusAdapterConfiguration {
 
-	@Autowired(required=false)
+	@Autowired(required = false)
 	@Qualifier("output")
 	private MessageChannel output;
-	
-	@Autowired(required=false)
+
+	@Autowired(required = false)
 	@Qualifier("input")
 	private MessageChannel input;
-	
+
 	@Bean
 	public MessageBusAdapter messageBusAdapter(ModuleProperties module,
 			MessageBus messageBus) {
@@ -56,10 +56,17 @@ public class MessageBusAdapterConfiguration {
 		return adapter;
 	}
 
-	@Bean
-	public MessageBusAwareRouterBeanPostProcessor messageBusAwareRouterBeanPostProcessor(
-			MessageBus messageBus) {
-		return new MessageBusAwareRouterBeanPostProcessor(messageBus, new Properties());
+	// Nested class to avoid instantiating all of the above early
+	@Configuration
+	protected static class MessageBusAwareRouterConfiguration {
+
+		@Bean
+		public MessageBusAwareRouterBeanPostProcessor messageBusAwareRouterBeanPostProcessor(
+				MessageBus messageBus) {
+			return new MessageBusAwareRouterBeanPostProcessor(messageBus,
+					new Properties());
+		}
+
 	}
 
 }

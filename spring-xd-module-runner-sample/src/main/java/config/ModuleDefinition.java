@@ -38,14 +38,14 @@ public class ModuleDefinition {
 
 	@Value("${format}")
 	private String format;
-	
+
 	@Bean
 	public MessageChannel output() {
 		return new DirectChannel();
 	}
-	
+
 	@Bean
-	@InboundChannelAdapter(value = "output", autoStartup = "false", poller = @Poller(fixedDelay = "${fixedDelay}"))
+	@InboundChannelAdapter(value = "output", autoStartup = "false", poller = @Poller(fixedDelay = "${fixedDelay}", maxMessagesPerPoll = "1"))
 	public MessageSource<String> timerMessageSource() {
 		return () -> new GenericMessage<>(new SimpleDateFormat(format).format(new Date()));
 	}
