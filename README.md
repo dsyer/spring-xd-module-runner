@@ -74,9 +74,13 @@ Code using this library can be deployed as a standlaone app or as an XD module. 
 
 Module option (placeholders) default values can be set in `/config/*.properties` as per a normal XD module, and they can be overridden at runtime in standalone mode using standard Spring Boot configuration (e.g. `application.yml`). Because of the way XD likes to organize options, the default values can also be set as `option.*` in `bootstrap.yml` (in standalone mode) or as System properties (generally).
 
-## Local Configuration
+### Local Configuration
 
 The `application.yml` and `bootstrap.yml` files are ignored by XD when deploying the module natively, so you can put whatever you like in there to control the app in standlone mode.
+
+### Fat JAR
+
+You can run in standalone mode from your IDE for testing. To run in production you can create an executable (or "fat") JAR using the standard Spring Boot tooling, but the executable JAR has a load of stuff in it that isn't needed if it's going to be deployed as an XD module. In that case you are better off with the normal JAR packaging provided by Maven or Gradle.
 
 ## Making Standalone Modules Talk to Each Other
 
