@@ -33,7 +33,8 @@ import org.springframework.xd.dirt.integration.rabbit.RabbitMessageBus;
  */
 @Configuration
 @ConditionalOnClass(RabbitMessageBus.class)
-@ImportResource("classpath*:/META-INF/spring-xd/analytics/rabbit-analytics.xml")
+@ImportResource({ "classpath*:/META-INF/spring-xd/bus/rabbit-bus.xml",
+		"classpath*:/META-INF/spring-xd/analytics/rabbit-analytics.xml" })
 public class RabbitServiceConfiguration {
 
 	@Configuration

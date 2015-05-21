@@ -1,0 +1,10 @@
+---
+xd:
+  config:
+    home: ${XD_HOME:${xdHome:./xd}}
+
+---
+xd:
+  module:
+    group: testtock
+    name: ticker

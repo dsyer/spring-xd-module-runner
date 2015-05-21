@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.integration.config.EnableIntegration;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
 import org.springframework.xd.dirt.integration.bus.MessageBusAwareRouterBeanPostProcessor;
@@ -36,11 +35,8 @@ import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
  *
  */
 @Configuration
-@EnableIntegration
 @Import(PropertyPlaceholderAutoConfiguration.class)
-// @ImportResource({"classpath*:/META-INF/spring-xd/bus/*.xml"})
-@ImportResource({ "classpath*:/META-INF/spring-xd/bus/redis-bus.xml",
-		"classpath*:/META-INF/spring-xd/bus/codec.xml" })
+@ImportResource("classpath*:/META-INF/spring-xd/bus/codec.xml")
 public class MessageBusAdapterConfiguration {
 
 	@Autowired(required=false)

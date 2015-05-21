@@ -2,15 +2,13 @@ package demo;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.xd.module.runner.EnableXdModule;
 
-import config.ModuleDefinition;
-
 @SpringBootApplication
 @EnableXdModule
-@ComponentScan(basePackageClasses=ModuleDefinition.class)
+@ImportResource("classpath:/config/ticker.xml")
 @PropertySource("classpath:/config/ticker.properties")
 public class ModuleApplication {
 

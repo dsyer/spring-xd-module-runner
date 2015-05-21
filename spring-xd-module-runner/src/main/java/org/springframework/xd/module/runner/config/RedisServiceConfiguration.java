@@ -33,7 +33,8 @@ import org.springframework.xd.dirt.integration.redis.RedisMessageBus;
  */
 @Configuration
 @ConditionalOnClass(RedisMessageBus.class)
-@ImportResource("classpath*:/META-INF/spring-xd/analytics/redis-analytics.xml")
+@ImportResource({ "classpath*:/META-INF/spring-xd/bus/redis-bus.xml",
+		"classpath*:/META-INF/spring-xd/analytics/redis-analytics.xml" })
 public class RedisServiceConfiguration {
 
 	@Configuration
