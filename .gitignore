@@ -6,6 +6,7 @@ asciidoctor.css
 *#
 target/
 bin/
+dump.rdb
 _site/
 xd
 .classpath

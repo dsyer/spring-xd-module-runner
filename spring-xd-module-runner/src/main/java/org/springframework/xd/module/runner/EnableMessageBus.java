@@ -41,6 +41,6 @@ import org.springframework.xd.module.runner.config.RedisServiceConfiguration;
 @Configuration
 @Import({ RedisServiceConfiguration.class, RabbitServiceConfiguration.class,
 		MessageBusAdapterConfiguration.class, LifecycleConfiguration.class })
-public @interface EnableXdModule {
+public @interface EnableMessageBus {
 
 }
