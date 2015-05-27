@@ -3,12 +3,12 @@ package demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.xd.module.runner.EnableXdModule;
+import org.springframework.xd.module.runner.EnableMessageBus;
 
 import config.ModuleDefinition;
 
 @SpringBootApplication
-@EnableXdModule
+@EnableMessageBus
 @ComponentScan(basePackageClasses=ModuleDefinition.class)
 public class TapApplication {
 
