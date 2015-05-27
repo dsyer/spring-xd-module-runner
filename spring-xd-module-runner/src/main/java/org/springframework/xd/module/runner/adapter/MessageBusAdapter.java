@@ -45,7 +45,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
 import org.springframework.xd.dirt.integration.bus.XdHeaders;
-import org.springframework.xd.module.ModuleType;
 import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 
 /**
@@ -168,7 +167,7 @@ public class MessageBusAdapter implements Lifecycle, ApplicationContextAware {
 		if (inputChannel != null) {
 			bindMessageConsumer(inputChannel, module.getInputChannelName(),
 					module.getConsumerProperties());
-			if (trackHistory && module.getType().equals(ModuleType.sink)) {
+			if (trackHistory && outputChannel==null) {
 				track(inputChannel, historyProperties);
 			}
 		}

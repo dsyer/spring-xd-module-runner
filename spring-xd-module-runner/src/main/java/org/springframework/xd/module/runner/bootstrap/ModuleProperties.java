@@ -42,7 +42,7 @@ public class ModuleProperties {
 
 	private String inputChannelName;
 
-	private ModuleType type = ModuleType.processor;
+	private String type = "processor";
 
 	private Properties consumerProperties = new Properties();
 
@@ -51,7 +51,7 @@ public class ModuleProperties {
 	private Tap tap;
 
 	public SimpleModuleDefinition getModuleDefinition() {
-		return ModuleDefinitions.simple(name, type, "classpath:");
+		return ModuleDefinitions.simple(name, ModuleType.valueOf(type), "classpath:");
 	}
 
 	public String getName() {
@@ -92,7 +92,7 @@ public class ModuleProperties {
 	}
 
 	public String getTapChannelName() {
-		Assert.isTrue(type != ModuleType.job, "Job module type not supported.");
+		Assert.isTrue(!type.equals("job"), "Job module type not supported.");
 		// for Stream return channel name with indexed elements
 		return String.format("%s.%s.%s", BusUtils.constructTapPrefix(group), name, index);
 	}
@@ -105,11 +105,11 @@ public class ModuleProperties {
 		this.inputChannelName = inputChannelName;
 	}
 
-	public ModuleType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(ModuleType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
