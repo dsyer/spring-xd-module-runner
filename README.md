@@ -40,13 +40,8 @@ The library uses a Spring Cloud bootstrap context to initialize the `Module` env
 
 ```
 ---
-xd:
-  config:
-    home: ${XD_HOME:${xdHome:./xd}}
-
----
-xd:
-  module:
+spring:
+  bus:
     group: testtock
     name: ${spring.application.name:ticker}
     index: 0 # source
@@ -88,15 +83,15 @@ You can run in standalone mode from your IDE for testing. To run in production y
 
 The "group" and "index" are used to create physical endpoints in the external broker (e.g. `queue.<group>.<index>` in Redis), so a source (output only) has `index=0` (the default) and downstream modules have the same group but incremented index, with a sink module (input only) having the highest index. To listen to the output from an existing app, just use the same "group" name and an index 1 larger than the app before it in the chain. The index can be anything, as long as successive modules have consecutive values. 
 
-> Note: since the same naming conventions are used in XD, you can spy on or send messages to an existing XD stream by copying the stream name (to `xd.group`) and knowing the index of the XD module you want to interact with.
+> Note: since the same naming conventions are used in XD, you can spy on or send messages to an existing XD stream by copying the stream name (to `spring.bus.group`) and knowing the index of the XD module you want to interact with.
 
 ## Taps
 
 All output channels are also tapped by default so you can also attach a module to a pub-sub endpoint and listen to the tap if you know the module metadata (e.g. `topic.tap:stream:<name>.<group>.<index>` in Redis). To tap an existing output channel you just need to know its group, name and index, e.g.
 
 ```
-xd:
-  module:
+spring:
+  bus:
     group: tocktap
     name: logger
     index: 0
@@ -106,4 +101,4 @@ xd:
       index: 0
 ```
 
-The `xd.module.tap` section tells the module runner which topic you want to subscribe to. It creates a new group (a tap can't be in the same group as the one it is tapping) and starts a new index count, in case anyone wants to listen downstream.
+The `spring.bus.tap` section tells the module runner which topic you want to subscribe to. It creates a new group (a tap can't be in the same group as the one it is tapping) and starts a new index count, in case anyone wants to listen downstream.
