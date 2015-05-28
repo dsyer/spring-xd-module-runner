@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.xd.module.runner.bootstrap;
+package org.springframework.bus.xd.bootstrap;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
