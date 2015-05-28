@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.xd.module.runner.config;
+package org.springframework.bus.runner.config;
 
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.bus.runner.adapter.MessageBusAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -27,8 +29,6 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
 import org.springframework.xd.dirt.integration.bus.MessageBusAwareRouterBeanPostProcessor;
-import org.springframework.xd.module.runner.adapter.MessageBusAdapter;
-import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 
 /**
  * @author Dave Syer
@@ -37,6 +37,7 @@ import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 @Configuration
 @Import(PropertyPlaceholderAutoConfiguration.class)
 @ImportResource("classpath*:/META-INF/spring-xd/bus/codec.xml")
+@EnableConfigurationProperties(MessageBusProperties.class)
 public class MessageBusAdapterConfiguration {
 
 	@Autowired(required = false)
@@ -48,7 +49,7 @@ public class MessageBusAdapterConfiguration {
 	private MessageChannel input;
 
 	@Bean
-	public MessageBusAdapter messageBusAdapter(ModuleProperties module,
+	public MessageBusAdapter messageBusAdapter(MessageBusProperties module,
 			MessageBus messageBus) {
 		MessageBusAdapter adapter = new MessageBusAdapter(module, messageBus);
 		adapter.setOutputChannel(output);

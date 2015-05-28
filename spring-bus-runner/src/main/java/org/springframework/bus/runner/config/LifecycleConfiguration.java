@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.springframework.xd.module.runner.config;
+package org.springframework.bus.runner.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.bus.runner.adapter.MessageBusAdapter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.xd.module.runner.adapter.MessageBusAdapter;
 
 /**
  * @author Dave Syer

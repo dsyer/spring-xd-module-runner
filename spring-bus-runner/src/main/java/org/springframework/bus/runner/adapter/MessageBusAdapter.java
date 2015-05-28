@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.xd.module.runner.adapter;
+package org.springframework.bus.runner.adapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.bus.runner.config.MessageBusProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -45,7 +46,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.xd.dirt.integration.bus.MessageBus;
 import org.springframework.xd.dirt.integration.bus.XdHeaders;
-import org.springframework.xd.module.runner.bootstrap.ModuleProperties;
 
 /**
  * @author Mark Fisher
@@ -67,11 +67,11 @@ public class MessageBusAdapter implements Lifecycle, ApplicationContextAware {
 
 	private boolean trackHistory = false;
 
-	private ModuleProperties module;
+	private MessageBusProperties module;
 
 	private ConfigurableApplicationContext applicationContext;
 
-	public MessageBusAdapter(ModuleProperties module, MessageBus messageBus) {
+	public MessageBusAdapter(MessageBusProperties module, MessageBus messageBus) {
 		this.module = module;
 		this.messageBus = messageBus;
 	}

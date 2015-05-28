@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.xd.module.runner;
+package org.springframework.bus.runner;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -23,12 +23,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.bus.runner.config.LifecycleConfiguration;
+import org.springframework.bus.runner.config.MessageBusAdapterConfiguration;
+import org.springframework.bus.runner.config.RabbitServiceConfiguration;
+import org.springframework.bus.runner.config.RedisServiceConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.xd.module.runner.config.LifecycleConfiguration;
-import org.springframework.xd.module.runner.config.MessageBusAdapterConfiguration;
-import org.springframework.xd.module.runner.config.RabbitServiceConfiguration;
-import org.springframework.xd.module.runner.config.RedisServiceConfiguration;
 
 /**
  * @author Dave Syer
@@ -41,6 +41,6 @@ import org.springframework.xd.module.runner.config.RedisServiceConfiguration;
 @Configuration
 @Import({ RedisServiceConfiguration.class, RabbitServiceConfiguration.class,
 		MessageBusAdapterConfiguration.class, LifecycleConfiguration.class })
-public @interface EnableXdModule {
+public @interface EnableMessageBus {
 
 }

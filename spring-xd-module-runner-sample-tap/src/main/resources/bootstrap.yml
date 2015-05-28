@@ -1,11 +1,6 @@
 ---
-xd:
-  config:
-    home: ${XD_HOME:${xdHome:./xd}}
-
----
-xd:
-  module:
+spring:
+  bus:
     group: tocktap
     name: logger
     index: 0

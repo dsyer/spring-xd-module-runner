@@ -1,10 +1,5 @@
 ---
-xd:
-  config:
-    home: ${XD_HOME:${xdHome:./xd}}
-
----
-xd:
-  module:
+spring:
+  bus:
     group: testtock
     name: ticker

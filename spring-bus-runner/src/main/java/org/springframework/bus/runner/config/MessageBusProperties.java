@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package org.springframework.xd.module.runner.bootstrap;
+package org.springframework.bus.runner.config;
 
 import java.util.Properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.Assert;
 import org.springframework.xd.dirt.integration.bus.BusUtils;
-import org.springframework.xd.module.ModuleDefinitions;
-import org.springframework.xd.module.ModuleType;
-import org.springframework.xd.module.SimpleModuleDefinition;
 
 /**
  * @author Dave Syer
  *
  */
-@ConfigurationProperties("xd.module")
-public class ModuleProperties {
+@ConfigurationProperties("spring.bus")
+public class MessageBusProperties {
 
 	private String name = "module";
 
@@ -49,10 +46,6 @@ public class ModuleProperties {
 	private Properties producerProperties = new Properties();
 	
 	private Tap tap;
-
-	public SimpleModuleDefinition getModuleDefinition() {
-		return ModuleDefinitions.simple(name, ModuleType.valueOf(type), "classpath:");
-	}
 
 	public String getName() {
 		return name;

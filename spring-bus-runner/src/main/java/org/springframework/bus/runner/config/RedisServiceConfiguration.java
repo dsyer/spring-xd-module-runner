@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package org.springframework.xd.module.runner.config;
+package org.springframework.bus.runner.config;
 
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.config.java.AbstractCloudConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
-import org.springframework.xd.dirt.integration.rabbit.RabbitMessageBus;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.xd.dirt.integration.redis.RedisMessageBus;
 
 /**
  * Bind to services, either locally or in a Lattice environment.
@@ -32,18 +32,18 @@ import org.springframework.xd.dirt.integration.rabbit.RabbitMessageBus;
  * @author Dave Syer
  */
 @Configuration
-@ConditionalOnClass(RabbitMessageBus.class)
-@ImportResource({ "classpath*:/META-INF/spring-xd/bus/rabbit-bus.xml",
-		"classpath*:/META-INF/spring-xd/analytics/rabbit-analytics.xml" })
-public class RabbitServiceConfiguration {
+@ConditionalOnClass(RedisMessageBus.class)
+@ImportResource({ "classpath*:/META-INF/spring-xd/bus/redis-bus.xml",
+		"classpath*:/META-INF/spring-xd/analytics/redis-analytics.xml" })
+public class RedisServiceConfiguration {
 
 	@Configuration
 	@Profile("cloud")
 	protected static class CloudConfig extends AbstractCloudConfig {
 
 		@Bean
-		ConnectionFactory rabbitConnectionFactory() {
-			return connectionFactory().rabbitConnectionFactory();
+		RedisConnectionFactory redisConnectionFactory() {
+			return connectionFactory().redisConnectionFactory();
 		}
 	}
 

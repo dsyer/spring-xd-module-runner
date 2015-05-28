@@ -11,6 +11,7 @@
 		<url>http://www.spring.io</url>
 	</organization>
 	<modules>
+		<module>spring-bus-runner</module>
 		<module>spring-xd-module-runner</module>
 		<module>spring-xd-module-runner-sample-source</module>
 		<module>spring-xd-module-runner-sample-sink</module>

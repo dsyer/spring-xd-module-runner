@@ -2,12 +2,12 @@ package demo;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.bus.runner.EnableMessageBus;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.xd.module.runner.EnableXdModule;
 
 @SpringBootApplication
-@EnableXdModule
+@EnableMessageBus
 @ImportResource("classpath:/config/ticker.xml")
 @PropertySource("classpath:/config/ticker.properties")
 public class ModuleApplication {
