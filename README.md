@@ -1,12 +1,12 @@
 # Spring XD Module as a Microservice
 
-This is an experimental project allowing user to develop and run an XD module locally. Just create `MessageChannels` "input" and/or "output" and add `@EnableXdModule` and run your app as a Spring Boot app (single application context).  You just need to connect to the physical broker for the bus, which is automatic if the relevant bus implementation is available on the classpath. The sample uses Redis.
+This is an experimental project allowing a user to develop and run an XD module locally. Just create `MessageChannels` "input" and/or "output" and add `@EnableMessageBus` and run your app as a Spring Boot app (single application context).  You just need to connect to the physical broker for the bus, which is automatic if the relevant bus implementation is available on the classpath. The sample uses Redis.
 
 Here's a sample source module (output channel only):
 
 ```
 @SpringBootApplication
-@EnableXdModule
+@EnableMessageBus
 @ComponentScan(basePackageClasses=ModuleDefinition.class)
 public class ModuleApplication {
 
